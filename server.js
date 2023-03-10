@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const db = require('./db/db.json');
+const fs= require('fs');
 // const apiRoutes = require('./routes/apiRoutes');
 // const htmlRoutes = require('./routes/htmlRoutes');
 
@@ -18,7 +19,7 @@ app.get('/notes', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname), "./public/index.html"))
+    res.sendFile(path.join(__dirname), "./public/index.html")
 });
 
 app.get('/api/notes', (req, res) => {
@@ -31,7 +32,7 @@ app.post('/api/notes', (req, res) => {
     const newNote = req.body;
     savedNotes.push(newNote);
     console.log(savedNotes);
-    fs.writeFileSync(path.join(__dirname, './db/db.json'), JSON.parse(savedNotes));
+    fs.writeFileSync(path.join(__dirname, './db/db.json'), JSON.stringify(savedNotes));
     res.status(200).json(savedNotes);
 });
 
